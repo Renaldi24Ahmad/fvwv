@@ -1,48 +1,39 @@
 @extends('theme.default')
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Products</h1>
+    <h1 class="mt-4">Satuan</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
 
-        <li class="breadcrumb-item active">Products</li>
+        <li class="breadcrumb-item active">Satuan</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            
-            <a href="{{ route('products.create') }}" class="btn btn-md btn-success mb-3">ADD PRODUCT</a>
-            <a href="{{ route('printproduct') }}" class="btn btn-md btn-warning mb-3">Print Product</a>
+            <a href="{{ route('satuans.create') }}" class="btn btn-md
+
+btn-success mb-3">ADD SATUAN</a>
             <div class="row">
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
-                            <th scope="col">IMAGE</th>
-                            <th scope="col">TITLE</th>
-                            <th scope="col">PRICE</th>
-                            <th scope="col">STOCK</th>
-                            <th scope="col" style="width:20%">
-
-                                ACTIONS </th>
-
+                            <th scope="col">NAME</th>
+                            <th scope="col">SIMBOL</th>
+                            <th scope="col">DESKRIPSI</th>
+                            <th scope="col" style="width:20%">ACTIONS </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products as $product)
+                        @forelse ($satuans as $satuan)
                         <tr>
+                            <td>{{ $satuan->name }}</td>
+                            <td>{{ $satuan->simbol }}</td>
+                            <td>{{ $satuan->deskripsi }}</td>
                             <td class="text-center">
-                                <img src="{{ asset('/storage/products/'.$product->image) }}" class="rounded" style="width: 100px">
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('satuans.destroy', $satuan->id)}}" method="POST">
 
-                            </td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ "Rp " . number_format($product->price,2,',','.') }}</td>
+                                    <a href="{{ route('satuans.show', $satuan->id) }}" class="btn btn-sm btn-dark">SHOW</a>
 
-                            <td>{{ $product->stock }}</td>
-                            <td class="text-center">
-                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('products.destroy', $product->id)}}" method="POST">
-
-                                    <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-dark">SHOW</a>
-
-                                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                    <a href="{{ route('satuans.edit', $satuan->id) }}" class="btn btn-sm btn-primary">EDIT</a>
 
                                     @csrf
                                     @method('DELETE')
@@ -52,12 +43,12 @@
                         </tr>
                         @empty
                         <div class="alert alert-danger">
-                            Data Products belum Tersedia.
+                            Data satuan belum Tersedia.
                         </div>
                         @endforelse
                     </tbody>
                 </table>
-                {{ $products->links() }}
+                {{ $satuans->links() }}
             </div>
         </div>
     </div>
